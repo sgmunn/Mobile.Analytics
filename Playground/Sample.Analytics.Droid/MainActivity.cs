@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Mobile.Analytics;
 
 namespace Sample.Analytics.Droid
 {
@@ -17,6 +18,9 @@ namespace Sample.Analytics.Droid
         {
             base.OnCreate(bundle);
 
+            Mobile.Analytics.Tracker.Init(new Mobile.Analytics.GoogleTracker(this));
+            Tracker.SetCurrentScreenName("Test 1");
+
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
 
@@ -26,8 +30,15 @@ namespace Sample.Analytics.Droid
             
             button.Click += delegate
             {
+                Tracker.SendEvent("c1", "a1", "l1");
                 button.Text = string.Format("{0} clicks!", count++);
             };
+        }
+
+        protected override void OnStart()
+        {
+            base.OnStart();
+            ////Google.Analytics.EasyTracker.GetInstance(this).ActivityStart(this);
         }
     }
 }

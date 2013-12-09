@@ -22,56 +22,56 @@ namespace Mobile.Analytics
 {
     using System;
     using Google.Analytics;
-    using MonoTouch.Foundation;
+    using Android.Content;
 
     public sealed class GoogleTracker : ITracker
     {
-        private readonly string trackingId;
+        private readonly Context context; 
 
-        public GoogleTracker(string trackingId)
+        public GoogleTracker(Context context)
         {
-            this.trackingId = trackingId;    
+            this.context = context;
         }
 
         public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
         {
-            GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
-            GAI.SharedInstance.DispatchInterval = dispatchInterval;
+            //GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
+            //GAI.SharedInstance.DispatchInterval = dispatchInterval;
         }
 
         public void SendEvent(string category, string action, string label)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            var tracker = EasyTracker.GetInstance(this.context);
             if (tracker != null)
             {
-                tracker.Send(GAIDictionaryBuilder.CreateEventWithCategory(category, action, label, new NSNumber(0)).Build());
+                tracker.Send(MapBuilder.CreateEvent(category, action, label, null).Build());
             }
         }
 
         public void SendException(string message, bool fatal)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            var tracker = EasyTracker.GetInstance(this.context);
             if (tracker != null)
             {
-                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(message, fatal ? 1 : 0).Build());
+                tracker.Send(MapBuilder.CreateException(message, new Java.Lang.Boolean(fatal)).Build());
             }
         }
 
         public void SendTiming(string category, int milliseconds, string name, string label)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            var tracker = EasyTracker.GetInstance(this.context);
             if (tracker != null)
             {
-                tracker.Send(GAIDictionaryBuilder.CreateTimingWithCategory(category, milliseconds, name, label).Build());
+                tracker.Send(MapBuilder.CreateTiming(category, new Java.Lang.Long(milliseconds), name, label).Build());
             }
         }
 
         public void SetCurrentScreenName(string name)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            var tracker = EasyTracker.GetInstance(this.context);
             if (tracker != null)
             {
-                tracker.Set(GAIFields.ScreenName, name);
+                tracker.Set(Fields.ScreenName, name);
             }
         }
     }

@@ -5,18 +5,17 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C2080D63-C3D8-46AB-95F2-E5BC3ED2CE49}</ProjectGuid>
+    <ProjectGuid>{16BF1B6C-AE80-45E1-9224-FEAF003DD421}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Sample.Analytics.Droid</RootNamespace>
-    <AndroidApplication>True</AndroidApplication>
+    <RootNamespace>Mobile.Analytics</RootNamespace>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
-    <AndroidUseLatestPlatformSdk>False</AndroidUseLatestPlatformSdk>
-    <AssemblyName>Sample.Analytics.Droid</AssemblyName>
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AssemblyName>Mobile.Analytics.Droid</AssemblyName>
+    <TargetFrameworkVersion>v4.3</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,30 +45,20 @@
     <Reference Include="Mono.Android" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GoogleTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
-    <None Include="Assets\AboutAssets.txt" />
-    <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\drawable\Icon.png" />
-    <AndroidResource Include="Resources\values\analytics.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Platform\Google.Analytics.Droid\Google.Analytics.Droid.csproj">
+    <ProjectReference Include="..\Google.Analytics.Droid\Google.Analytics.Droid.csproj">
       <Project>{8AC49A85-7B9C-40B0-8C0D-00CB23E5E5B7}</Project>
       <Name>Google.Analytics.Droid</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Platform\Mobile.Analytics.Droid\Mobile.Analytics.Droid.csproj">
-      <Project>{16BF1B6C-AE80-45E1-9224-FEAF003DD421}</Project>
-      <Name>Mobile.Analytics.Droid</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Mobile.Analytics.Portable\Mobile.Analytics.Portable.csproj">
       <Project>{197E1680-D5C8-4FAC-BF25-812F2AB85A08}</Project>

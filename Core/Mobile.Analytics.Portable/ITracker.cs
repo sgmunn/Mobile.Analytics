@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=".cs" company="sgmunn">
+// <copyright file="ITracker.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -33,67 +33,4 @@ namespace Mobile.Analytics
 
         void SetCurrentScreenName(string name);
     }
-
-    public static class Tracker
-    {
-        private static ITracker instance = NullTracker.Instance;
-
-        public static void Init(ITracker tracker)
-        {
-            if (tracker == null)
-            {
-                throw new ArgumentNullException("tracker");
-            }
-
-            instance = tracker;
-        }
-
-        public static void SendEvent(string category, string action, string label)
-        {
-            instance.SendEvent(category, action, label);
-        }
-
-        public static void SendException(string message, bool fatal)
-        {
-            instance.SendException(message, fatal);
-        }
-
-        public static void SendTiming(string category, int milliseconds, string name, string label)
-        {
-            instance.SendTiming(category, milliseconds, name, label);
-        }
-
-        public static void SetCurrentScreenName(string name)
-        {
-            instance.SetCurrentScreenName(name);
-        }
-    }
-
-    public sealed class NullTracker : ITracker
-    {
-        public readonly static ITracker Instance = new NullTracker();
-
-        private NullTracker()
-        {
-        }
-
-        public void SendEvent(string category, string action, string label)
-        {
-        }
-
-        public void SendException(string message, bool fatal)
-        {
-        }
-
-        public void SendTiming(string category, int milliseconds, string name, string label)
-        {
-        }
-
-        public void SetCurrentScreenName(string name)
-        {
-        }
-    }
-
-
 }
-

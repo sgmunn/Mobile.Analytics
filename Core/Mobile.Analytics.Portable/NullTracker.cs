@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="GoogleTracker.cs" company="sgmunn">
+// <copyright file="NullTracker.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,58 +21,29 @@
 namespace Mobile.Analytics
 {
     using System;
-    using Google.Analytics;
-    using MonoTouch.Foundation;
 
-    public sealed class GoogleTracker : ITracker
+    public sealed class NullTracker : ITracker
     {
-        private readonly string trackingId;
+        public readonly static ITracker Instance = new NullTracker();
 
-        public GoogleTracker(string trackingId)
+        private NullTracker()
         {
-            this.trackingId = trackingId;    
-        }
-
-        public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
-        {
-            GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
-            GAI.SharedInstance.DispatchInterval = dispatchInterval;
         }
 
         public void SendEvent(string category, string action, string label)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
-            if (tracker != null)
-            {
-                tracker.Send(GAIDictionaryBuilder.CreateEventWithCategory(category, action, label, new NSNumber(0)).Build());
-            }
         }
 
         public void SendException(string message, bool fatal)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
-            if (tracker != null)
-            {
-                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(message, fatal ? 1 : 0).Build());
-            }
         }
 
         public void SendTiming(string category, int milliseconds, string name, string label)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
-            if (tracker != null)
-            {
-                tracker.Send(GAIDictionaryBuilder.CreateTimingWithCategory(category, milliseconds, name, label).Build());
-            }
         }
 
         public void SetCurrentScreenName(string name)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
-            if (tracker != null)
-            {
-                tracker.Set(GAIFields.ScreenName, name);
-            }
         }
     }
 }
