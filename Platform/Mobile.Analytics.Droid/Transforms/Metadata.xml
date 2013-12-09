@@ -1,0 +1,16 @@
+<metadata>
+  <attr path="/api/package[@name='com.google.analytics.tracking.android']" name="managedName">Mobile.Analytics.Google</attr>
+ 
+  <remove-node path="/api/package[@name='com.google.analytics.containertag.common']" />
+  <remove-node path="/api/package[@name='com.google.analytics.containertag.proto']" />
+  <remove-node path="/api/package[@name='com.google.analytics.midtier.proto.containertag']" />
+  <remove-node path="/api/package[@name='com.google.android.gms.analytics.internal']" />
+  <remove-node path="/api/package[@name='com.google.android.gms.common.util']" />
+  <remove-node path="/api/package[@name='com.google.tagmanager']" />
+  <remove-node path="/api/package[@name='com.google.tagmanager.proto']" />
+  <remove-node path="/api/package[@name='com.google.tagmanager.protobuf']" />
+
+  <attr path="/api/package[@name='com.google.analytics.tracking.android']/class[@name='CampaignTrackingService']" name="extends">mono.android.app.IntentService</attr>
+  <attr path="/api/package[@name='com.google.analytics.tracking.android']/class[@name='CampaignTrackingService']/method[@name='onHandleIntent' and count(parameter)=1 and parameter[1][@type='android.content.Intent']]" name="visibility">protected</attr>
+  <attr path="/api/package[@name='com.google.analytics.tracking.android']/class[@name='TrackerHandler']" name="visibility">public</attr>
+</metadata>
