@@ -104,8 +104,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Platform\Mobile.Analytics.iOS\Mobile.Analytics.iOS.csproj">
+    <ProjectReference Include="..\..\Platform\Google.Analytics.iOS\Google.Analytics.iOS.csproj">
       <Project>{2DE3035A-B8D2-4596-B4DB-A8907DE53EB4}</Project>
+      <Name>Google.Analytics.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Platform\Mobile.Analytics.iOS\Mobile.Analytics.iOS.csproj">
+      <Project>{A617E205-E0BA-498A-A76C-47E688585285}</Project>
       <Name>Mobile.Analytics.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Mobile.Analytics.Portable\Mobile.Analytics.Portable.csproj">

@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A617E205-E0BA-498A-A76C-47E688585285}</ProjectGuid>
-    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{2DE3035A-B8D2-4596-B4DB-A8907DE53EB4}</ProjectGuid>
+    <ProjectTypeGuids>{F5B4F3BC-B597-4E2B-B552-EF5D8A32436F};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>Mobile.Analytics</RootNamespace>
+    <RootNamespace>Google.Analytics</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>Mobile.Analytics.iOS</AssemblyName>
+    <AssemblyName>Google.Analytics.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,6 +21,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <additionalargs>--nosymbolstrip=kGAIScreenName</additionalargs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>full</DebugType>
@@ -29,28 +31,29 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <additionalargs>--nosymbolstrip=kGAIScreenName</additionalargs>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
     <Reference Include="monotouch" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <Compile Include="GoogleTracker.cs" />
+    <ObjcBindingApiDefinition Include="ApiDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Google.Analytics.iOS\Google.Analytics.iOS.csproj">
-      <Project>{2DE3035A-B8D2-4596-B4DB-A8907DE53EB4}</Project>
-      <Name>Google.Analytics.iOS</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Core\Mobile.Analytics.Portable\Mobile.Analytics.Portable.csproj">
-      <Project>{197E1680-D5C8-4FAC-BF25-812F2AB85A08}</Project>
-      <Name>Mobile.Analytics.Portable</Name>
-    </ProjectReference>
+    <ObjcBindingCoreSource Include="StructsAndEnums.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ObjcBindingNativeLibrary Include="libGoogleAnalyticsServices.a" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="libGoogleAnalyticsServices.linkwith.cs">
+      <DependentUpon>libGoogleAnalyticsServices.a</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Xamarin.ObjcBinding.CSharp.targets" />
 </Project>

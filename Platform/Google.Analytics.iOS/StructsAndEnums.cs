@@ -3,7 +3,7 @@
 // https://github.com/therealjohn/GoogleAnalytics// <copyright file=".cs" company="sgmunn">
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace Mobile.Analytics.Google
+namespace Google.Analytics
 {
     using System;
 

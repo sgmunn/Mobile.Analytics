@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file=".cs" company="sgmunn">
+// <copyright file="GoogleTracker.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,79 +21,47 @@
 namespace Mobile.Analytics
 {
     using System;
+    using Google.Analytics;
+    using MonoTouch.Foundation;
 
-    /// <summary>
-    /// Represents an analytics tracker
-    /// </summary>
-    public interface ITracker
+    public sealed class GoogleTracker : ITracker
     {
-        void SendEvent(string category, string action, string label);
-        void SendException(string message, bool fatal);
-        void SendTiming(string category, int milliseconds, string name, string label);
+        private readonly string trackingId;
 
-        void SetCurrentScreenName(string name);
-    }
-
-    public static class Tracker
-    {
-        private static ITracker instance = NullTracker.Instance;
-
-        public static void Init(ITracker tracker)
+        public GoogleTracker(string trackingId)
         {
-            if (tracker == null)
-            {
-                throw new ArgumentNullException("tracker");
-            }
-
-            instance = tracker;
+            this.trackingId = trackingId;    
         }
 
-        public static void SendEvent(string category, string action, string label)
+        public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
         {
-            instance.SendEvent(category, action, label);
-        }
-
-        public static void SendException(string message, bool fatal)
-        {
-            instance.SendException(message, fatal);
-        }
-
-        public static void SendTiming(string category, int milliseconds, string name, string label)
-        {
-            instance.SendTiming(category, milliseconds, name, label);
-        }
-
-        public static void SetCurrentScreenName(string name)
-        {
-            instance.SetCurrentScreenName(name);
-        }
-    }
-
-    public sealed class NullTracker : ITracker
-    {
-        public readonly static ITracker Instance = new NullTracker();
-
-        private NullTracker()
-        {
+            GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
+            GAI.SharedInstance.DispatchInterval = dispatchInterval;
         }
 
         public void SendEvent(string category, string action, string label)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            tracker.Send(GAIDictionaryBuilder.CreateEventWithCategory(category, action, label, new NSNumber(0)).Build());
         }
 
         public void SendException(string message, bool fatal)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(message, fatal ? 1 : 0).Build());
         }
 
         public void SendTiming(string category, int milliseconds, string name, string label)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            tracker.Send(GAIDictionaryBuilder.CreateTimingWithCategory(category, milliseconds, name, label).Build());
         }
 
         public void SetCurrentScreenName(string name)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            tracker.Set(GAIFields.ScreenName, name);
         }
     }
-
-
 }
 

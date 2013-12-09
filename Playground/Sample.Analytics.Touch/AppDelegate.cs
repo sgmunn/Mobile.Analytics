@@ -22,6 +22,9 @@ using System.Collections.Generic;
 using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using Mobile.Analytics;
+using Mono.Security.X509;
+using Google.Analytics;
 
 namespace Sample.Analytics.Touch
 {
@@ -42,6 +45,9 @@ namespace Sample.Analytics.Touch
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            Tracker.Init(new GoogleTracker("xxxx"));
+
+
             // create a new window instance based on the screen size
             window = new UIWindow(UIScreen.MainScreen.Bounds);
             
@@ -50,7 +56,27 @@ namespace Sample.Analytics.Touch
             
             // make the window visible
             window.MakeKeyAndVisible();
-            
+
+            GAI.SharedInstance.TrackUncaughtExceptions = true;
+            GAI.SharedInstance.DispatchInterval = 1;
+
+
+            // Tracker.SendEvent("ui_action", "button_press 1", "play_me");
+
+            // Tracker.SendTiming("timing category", 100, "timing name", "timing label 1");
+
+            Tracker.SetCurrentScreenName("main App Screen xx");
+            Tracker.SendEvent("ui_action", "button_press 1", "play_me");
+
+            //var tracker = GAI.SharedInstance.TrackerWithTrackingId("UA-46263709-1");
+            //tracker.Send(GAIDictionaryBuilder.CreateEventWithCategory("ui_acton", "button_press", "play_me", new NSNumber(0)).Build());
+
+            //tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription("error description --  1", new NSNumber(1)).Build());
+
+            //tracker.Send(GAIDictionaryBuilder.CreateTimingWithCategory("timing category", new NSNumber(100), "timing name", "timing label").Build());
+
+            //            tracker.Set(Mobile.Analytics.Google.GAIFields.ScreenName);
+
             return true;
         }
     }
