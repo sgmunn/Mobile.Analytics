@@ -33,12 +33,6 @@ namespace Mobile.Analytics
             this.context = context;
         }
 
-        public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
-        {
-            //GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
-            //GAI.SharedInstance.DispatchInterval = dispatchInterval;
-        }
-
         public void SendEvent(string category, string action, string label)
         {
             var tracker = EasyTracker.GetInstance(this.context);
