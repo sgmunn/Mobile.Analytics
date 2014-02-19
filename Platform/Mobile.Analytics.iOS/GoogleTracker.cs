@@ -71,6 +71,7 @@ namespace Mobile.Analytics
             if (tracker != null)
             {
                 tracker.Set(GAIFields.ScreenName, name);
+                tracker.Send(GAIDictionaryBuilder.CreateAppView().Build());
             }
         }
     }

@@ -31,7 +31,7 @@ namespace Mobile.Analytics
         public GoogleTracker(Context context)
         {
             this.context = context;
-            Google.Analytics.GAServiceManager.Instance.SetLocalDispatchPeriod(1);
+            Google.Analytics.GAServiceManager.Instance.SetLocalDispatchPeriod(10);
         }
 
         public void SendEvent(string category, string action, string label)
@@ -58,8 +58,7 @@ namespace Mobile.Analytics
             if (tracker != null)
             {
                 tracker.Set(Fields.ScreenName, name);
-                SendEvent(name, "1", "2");
-                //                tracker.
+                tracker.Send(MapBuilder.CreateAppView().Build());
             }
         }
     }

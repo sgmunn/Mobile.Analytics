@@ -114,6 +114,21 @@ namespace Mobile.Analytics
             }
         }
 
+        public static void SendEvent<T>(string action)
+        {
+            SendEvent<T>(action, null);
+        }
+
+        public static void SendEvent<T>(string action, string label)
+        {
+            var category = typeof(T).FullName;
+
+            foreach (var instance in GetTrackers())
+            {
+                instance.SendEvent(category, action, label);
+            }
+        }
+
         public static void SendException(Exception ex, bool fatal)
         {
             foreach (var instance in GetCrashReporters())
@@ -140,6 +155,16 @@ namespace Mobile.Analytics
 
         public static void SetCurrentScreenName(string name)
         {
+            foreach (var instance in GetTrackers())
+            {
+                instance.SetCurrentScreenName(name);
+            }
+        }
+
+        public static void SetCurrentScreen<T>()
+        {
+            var name = typeof(T).FullName;
+
             foreach (var instance in GetTrackers())
             {
                 instance.SetCurrentScreenName(name);
