@@ -30,6 +30,14 @@ namespace Mobile.Analytics
         {
         }
 
+        public object Native
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public void SendEvent(string category, string action, string label)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("EVENT: {0} - {1} - {2}", category, action, label));

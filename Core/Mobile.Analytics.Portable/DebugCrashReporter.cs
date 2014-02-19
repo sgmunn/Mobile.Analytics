@@ -30,6 +30,14 @@ namespace Mobile.Analytics
         {
         }
 
+        public object Native
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public void SendException(Exception ex, bool fatal)
         {
             System.Diagnostics.Debug.WriteLine(string.Format("EXCEPTION: {0}{1}", fatal ? "FATAL - " : string.Empty, ex));

@@ -30,6 +30,14 @@ namespace Mobile.Analytics
         {
         }
 
+        public object Native
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         public void SendException(Exception ex)
         {
         }
