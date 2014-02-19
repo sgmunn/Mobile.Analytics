@@ -35,6 +35,15 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="monotouch" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\portable-net40+sl5+wp80+win8+monotouch+monoandroid\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="BugSense.Xamarin.Bind.iOS">
+      <HintPath>..\..\packages\BugSense.Xamarin.iOS.3.6.3.0\lib\MonoTouch\BugSense.Xamarin.Bind.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="BugSense.Xamarin.iOS">
+      <HintPath>..\..\packages\BugSense.Xamarin.iOS.3.6.3.0\lib\MonoTouch\BugSense.Xamarin.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -43,6 +52,7 @@
   <ItemGroup>
     <Compile Include="GoogleTracker.cs" />
     <Compile Include="GoogleCrashReporter.cs" />
+    <Compile Include="BugsenseCrashReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Google.Analytics.iOS\Google.Analytics.iOS.csproj">
@@ -53,5 +63,9 @@
       <Project>{197E1680-D5C8-4FAC-BF25-812F2AB85A08}</Project>
       <Name>Mobile.Analytics.Portable</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="BugSense\BugSense - SDK License Agreement.txt" />
   </ItemGroup>
 </Project>
