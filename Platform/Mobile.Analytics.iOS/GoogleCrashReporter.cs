@@ -33,6 +33,14 @@ namespace Mobile.Analytics
             this.trackingId = trackingId;    
         }
 
+        public object Native 
+        { 
+            get
+            {
+                return GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            }
+        }
+
         public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
         {
             GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
