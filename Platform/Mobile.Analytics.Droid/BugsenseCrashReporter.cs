@@ -25,7 +25,6 @@ namespace Mobile.Analytics
     using BugSense.Model;
     using Android.App;
 
-    // TODO: make sure that unhandled exceptions get sent
     // TODO: provide a way to pass in additional information
 
     public sealed class BugsenseCrashReporter : ICrashReporter
@@ -33,7 +32,13 @@ namespace Mobile.Analytics
         public BugsenseCrashReporter(string key)
         {
             BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(), Application.Context, key);
-            //BugSenseHandler.Instance.UserIdentifier = "greg";
+            //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
+        }
+
+        public BugsenseCrashReporter(string key, string userId)
+        {
+            BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(), Application.Context, key);
+            BugSenseHandler.Instance.UserIdentifier = userId;
             //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
 

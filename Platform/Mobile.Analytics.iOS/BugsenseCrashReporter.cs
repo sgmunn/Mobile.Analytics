@@ -30,6 +30,12 @@ namespace Mobile.Analytics
             BugSenseHandler.Instance.InitAndStartSession(key);
         }
 
+        public BugsenseCrashReporter(string key, string userId)
+        {
+            BugSenseHandler.Instance.InitAndStartSession(key);
+            BugSenseHandler.Instance.UserIdentifier = userId;
+        }
+
         public object Native 
         { 
             get
