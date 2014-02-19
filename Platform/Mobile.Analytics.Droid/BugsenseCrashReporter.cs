@@ -22,28 +22,20 @@ namespace Mobile.Analytics
 {
     using System;
     using BugSense;
-    using Android.Content;
+    using BugSense.Model;
+    using Android.App;
 
-    // TODO: the android version sends the exceptions as crashes, whereas the ios version sends them as handled
     // TODO: make sure that unhandled exceptions get sent
+    // TODO: provide a way to pass in additional information
 
-    public sealed class BugsenseCrashReporter : ICrashReporter, BugSense.Model.IExceptionManager
+    public sealed class BugsenseCrashReporter : ICrashReporter
     {
-        ////private readonly Context context; 
-
-        ////private readonly string key;
-
-        public BugsenseCrashReporter(Context context, string key)
+        public BugsenseCrashReporter(string key)
         {
-            ////this.context = context;
-            ////this.key = key;
-
-            BugSenseHandler.Instance.InitAndStartSession(this, context, key);
+            BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(), Application.Context, key);
             //BugSenseHandler.Instance.UserIdentifier = "greg";
             //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
-
-        public event EventHandler<Android.Runtime.RaiseThrowableEventArgs> UnhandledExceptionRaiser;
 
         public object Native 
         { 
@@ -55,12 +47,12 @@ namespace Mobile.Analytics
 
         public void SendException(Exception ex)
         {
-            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
+            BugSenseHandler.Instance.LogException(ex, null);
         }
 
         public void SendException(Exception ex, bool fatal)
         {
-            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
+            BugSenseHandler.Instance.LogException(ex, null);
         }
     }
 }

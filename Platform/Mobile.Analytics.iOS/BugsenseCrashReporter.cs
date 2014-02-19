@@ -40,12 +40,12 @@ namespace Mobile.Analytics
 
         public void SendException(Exception ex)
         {
-            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
+            BugSenseHandler.Instance.LogException(ex, null);
         }
 
         public void SendException(Exception ex, bool fatal)
         {
-            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
+            BugSenseHandler.Instance.LogException(ex, null);
         }
     }
 }
