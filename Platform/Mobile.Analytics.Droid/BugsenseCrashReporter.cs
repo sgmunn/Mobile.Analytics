@@ -24,6 +24,9 @@ namespace Mobile.Analytics
     using BugSense;
     using Android.Content;
 
+    // TODO: the android version sends the exceptions as crashes, whereas the ios version sends them as handled
+    // TODO: make sure that unhandled exceptions get sent
+
     public sealed class BugsenseCrashReporter : ICrashReporter, BugSense.Model.IExceptionManager
     {
         ////private readonly Context context; 

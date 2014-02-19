@@ -23,20 +23,11 @@ namespace Mobile.Analytics
     using System;
     using BugSense;
 
-    public sealed class BugsenseCrashReporter : ICrashReporter//, BugSense.Model.IExceptionManager
+    public sealed class BugsenseCrashReporter : ICrashReporter
     {
-        ////private readonly Context context; 
-
-        ////private readonly string key;
-
         public BugsenseCrashReporter(string key)
         {
-            ////this.context = context;
-            ////this.key = key;
-
             BugSenseHandler.Instance.InitAndStartSession(key);
-            //BugSenseHandler.Instance.UserIdentifier = "greg";
-            //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
 
         public object Native 
