@@ -17,12 +17,12 @@ namespace Sample.Analytics.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            Mobile.Analytics.Tracker.AddTracker(new Mobile.Analytics.GoogleTracker(Application.Context));
+            Mobile.Analytics.Tracking.AddTracker(new Mobile.Analytics.GoogleTracker(Application.Context));
 
-            Mobile.Analytics.Tracker.AddCrashReporter(new Mobile.Analytics.BugsenseCrashReporter(Application.Context, "--------"));
+            Mobile.Analytics.Tracking.AddCrashReporter(new Mobile.Analytics.BugsenseCrashReporter(Application.Context, "------"));
 
 
-            Tracker.SetCurrentScreenName("Screen 1");
+            Tracking.SetCurrentScreen<MainActivity>();
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -33,7 +33,7 @@ namespace Sample.Analytics.Droid
             
             button.Click += delegate
             {
-                Tracker.SendEvent("button 1", "clicked", "1");
+                Tracking.SendEvent<ButtonClick>("clicked 1");
 
                 this.StartActivity(typeof(Screen2Activity));
             };
@@ -46,6 +46,10 @@ namespace Sample.Analytics.Droid
         }
     }
 
+    public class ButtonClick
+    {
+    }
+
 
     [Activity(Label = "Screen 2", MainLauncher = true)]
     public class Screen2Activity : Activity
@@ -56,10 +60,9 @@ namespace Sample.Analytics.Droid
         {
             base.OnCreate(savedInstanceState);
 
-            Mobile.Analytics.Tracker.AddCrashReporter(new Mobile.Analytics.BugsenseCrashReporter(Application.Context, "d429fb1a"));
+            Mobile.Analytics.Tracking.AddCrashReporter(new Mobile.Analytics.BugsenseCrashReporter(Application.Context, "d429fb1a"));
 
-
-            Tracker.SetCurrentScreenName("Sceen 2");
+            Tracking.SetCurrentScreen<Screen2Activity>();
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
@@ -70,14 +73,14 @@ namespace Sample.Analytics.Droid
 
             button.Click += delegate
             {
-                Tracker.SendEvent("button 2", "clicked", "1");
+                Tracking.SendEvent<ButtonClick>("clicked");
                 try
                 {
                     throw new ArgumentNullException("joe");
                 }
                 catch(Exception ex)
                 {
-                    Tracker.SendException(ex, false);
+                    Tracking.SendException(ex, false);
                     //Tracker.SendEvent("error1", "action", ex.ToString());
                 }
                 button.Text = string.Format("{0} clicks!", count++);

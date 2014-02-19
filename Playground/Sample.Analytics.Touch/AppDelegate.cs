@@ -45,7 +45,8 @@ namespace Sample.Analytics.Touch
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            Tracker.Init(new GoogleTracker("xxxx"));
+            Tracking.AddTracker(new GoogleTracker("-----------"));
+            Tracking.AddCrashReporter(new BugsenseCrashReporter("--------"));
 
 
             // create a new window instance based on the screen size
@@ -65,8 +66,10 @@ namespace Sample.Analytics.Touch
 
             // Tracker.SendTiming("timing category", 100, "timing name", "timing label 1");
 
-            Tracker.SetCurrentScreenName("main App Screen xx");
-            Tracker.SendEvent("ui_action", "button_press 1", "play_me");
+            Tracking.SetCurrentScreenName("main App Screen xx");
+            Tracking.SendEvent("ui_action", "button_press 1", "play_me");
+            Test();
+
 
             //var tracker = GAI.SharedInstance.TrackerWithTrackingId("UA-46263709-1");
             //tracker.Send(GAIDictionaryBuilder.CreateEventWithCategory("ui_acton", "button_press", "play_me", new NSNumber(0)).Build());
@@ -78,6 +81,20 @@ namespace Sample.Analytics.Touch
             //            tracker.Set(Mobile.Analytics.Google.GAIFields.ScreenName);
 
             return true;
+        }
+
+        private void Test()
+        {
+            try
+            {
+                throw new InvalidOperationException("Just kidding");
+            }
+            catch(Exception ex)
+            {
+                Tracking.SendException(ex, false);
+                Tracking.SendEvent("error", "action", ex.ToString());
+            }
+
         }
     }
 }

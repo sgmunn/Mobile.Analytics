@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="Tracker.cs" company="sgmunn">
+// <copyright file="Tracking.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -24,7 +24,7 @@ namespace Mobile.Analytics
     using System.Collections.Generic;
     using System.Linq;
 
-    public static class Tracker
+    public static class Tracking
     {
         private static readonly object locker = new object();
 

@@ -156,6 +156,6 @@ Global
 		{884680BE-6EDB-43C9-8D4A-C5829B3275C4} = {F3CCB1C6-5FDE-452B-A76A-28C54F721EF0}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Playground\Sample.Analytics.Droid\Sample.Analytics.Droid.csproj
+		StartupItem = Playground\Sample.Analytics.Touch\Sample.Analytics.Touch.csproj
 	EndGlobalSection
 EndGlobal
