@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullTracker.cs" company="sgmunn">
+// <copyright file="ICrashReporter.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,25 +22,12 @@ namespace Mobile.Analytics
 {
     using System;
 
-    public sealed class NullTracker : ITracker
+    /// <summary>
+    /// Represents a crash reporter
+    /// </summary>
+    public interface ICrashReporter
     {
-        public readonly static ITracker Instance = new NullTracker();
-
-        private NullTracker()
-        {
-        }
-
-        public void SendEvent(string category, string action, string label)
-        {
-        }
-
-        public void SendTiming(string category, int milliseconds, string name, string label)
-        {
-        }
-
-        public void SetCurrentScreenName(string name)
-        {
-        }
+        void SendException(Exception ex, bool fatal);
+        void SendException(Exception ex);
     }
 }
-

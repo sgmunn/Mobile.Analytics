@@ -26,6 +26,10 @@ namespace Sample.Analytics.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::BugSense.Xamarin.Resource.String.ApplicationName = global::Sample.Analytics.Droid.Resource.String.ApplicationName;
+			global::BugSense.Xamarin.Resource.String.Hello = global::Sample.Analytics.Droid.Resource.String.Hello;
+			global::Mobile.Analytics.Resource.String.ApplicationName = global::Sample.Analytics.Droid.Resource.String.ApplicationName;
+			global::Mobile.Analytics.Resource.String.Hello = global::Sample.Analytics.Droid.Resource.String.Hello;
 			global::Mobile.Analytics.Resource.String.library_name = global::Sample.Analytics.Droid.Resource.String.library_name;
 		}
 		
@@ -112,14 +116,20 @@ namespace Sample.Analytics.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f040003
-			public const int app_name = 2130968579;
+			// aapt resource value: 0x7f040002
+			public const int ApplicationName = 2130968578;
 			
 			// aapt resource value: 0x7f040001
-			public const int ga_trackingId = 2130968577;
+			public const int Hello = 2130968577;
 			
-			// aapt resource value: 0x7f040002
-			public const int hello = 2130968578;
+			// aapt resource value: 0x7f040005
+			public const int app_name = 2130968581;
+			
+			// aapt resource value: 0x7f040003
+			public const int ga_trackingId = 2130968579;
+			
+			// aapt resource value: 0x7f040004
+			public const int hello = 2130968580;
 			
 			// aapt resource value: 0x7f040000
 			public const int library_name = 2130968576;

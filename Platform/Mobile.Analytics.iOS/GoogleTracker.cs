@@ -33,9 +33,8 @@ namespace Mobile.Analytics
             this.trackingId = trackingId;    
         }
 
-        public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
+        public static void Init(int dispatchInterval)
         {
-            GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
             GAI.SharedInstance.DispatchInterval = dispatchInterval;
         }
 
@@ -76,4 +75,3 @@ namespace Mobile.Analytics
         }
     }
 }
-

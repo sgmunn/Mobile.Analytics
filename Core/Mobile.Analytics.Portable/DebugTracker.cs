@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullTracker.cs" company="sgmunn">
+// <copyright file="DebugTracker.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,25 +22,27 @@ namespace Mobile.Analytics
 {
     using System;
 
-    public sealed class NullTracker : ITracker
+    public sealed class DebugTracker : ITracker
     {
-        public readonly static ITracker Instance = new NullTracker();
+        public readonly static ITracker Instance = new DebugTracker();
 
-        private NullTracker()
+        private DebugTracker()
         {
         }
 
         public void SendEvent(string category, string action, string label)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("EVENT: {0} - {1} - {2}", category, action, label));
         }
 
         public void SendTiming(string category, int milliseconds, string name, string label)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("TIMING: {0} - {1} - {2} - {3}", category, milliseconds, name, label));
         }
 
         public void SetCurrentScreenName(string name)
         {
+            System.Diagnostics.Debug.WriteLine(string.Format("SCREEN: {0}", name));
         }
     }
 }
-

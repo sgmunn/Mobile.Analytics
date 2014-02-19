@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullTracker.cs" company="sgmunn">
+// <copyright file="GoogleCrashReporter.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,26 +21,35 @@
 namespace Mobile.Analytics
 {
     using System;
+    using Google.Analytics;
+    using Android.Content;
 
-    public sealed class NullTracker : ITracker
+    public sealed class GoogleCrashReporter : ICrashReporter
     {
-        public readonly static ITracker Instance = new NullTracker();
+        private readonly Context context; 
 
-        private NullTracker()
+        public GoogleCrashReporter(Context context)
         {
+            this.context = context;
         }
 
-        public void SendEvent(string category, string action, string label)
+        public void SendException(Exception ex)
         {
+            this.SendException(ex.ToString(), false);
         }
 
-        public void SendTiming(string category, int milliseconds, string name, string label)
+        public void SendException(Exception ex, bool fatal)
         {
+            this.SendException(ex.ToString(), fatal);
         }
 
-        public void SetCurrentScreenName(string name)
+        private void SendException(string message, bool fatal)
         {
+            var tracker = EasyTracker.GetInstance(this.context);
+            if (tracker != null)
+            {
+                tracker.Send(MapBuilder.CreateException(message, new Java.Lang.Boolean(fatal)).Build());
+            }
         }
     }
 }
-

@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullTracker.cs" company="sgmunn">
+// <copyright file="BugsenseCrashReporter.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,26 +21,35 @@
 namespace Mobile.Analytics
 {
     using System;
+    using BugSense;
+    using Android.Content;
 
-    public sealed class NullTracker : ITracker
+    public sealed class BugsenseCrashReporter : ICrashReporter, BugSense.Model.IExceptionManager
     {
-        public readonly static ITracker Instance = new NullTracker();
+        ////private readonly Context context; 
 
-        private NullTracker()
+        ////private readonly string key;
+
+        public BugsenseCrashReporter(Context context, string key)
         {
+            ////this.context = context;
+            ////this.key = key;
+
+            BugSenseHandler.Instance.InitAndStartSession(this, context, key);
+            //BugSenseHandler.Instance.UserIdentifier = "greg";
+            //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
 
-        public void SendEvent(string category, string action, string label)
+        public event EventHandler<Android.Runtime.RaiseThrowableEventArgs> UnhandledExceptionRaiser;
+
+        public void SendException(Exception ex)
         {
+            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
         }
 
-        public void SendTiming(string category, int milliseconds, string name, string label)
+        public void SendException(Exception ex, bool fatal)
         {
-        }
-
-        public void SetCurrentScreenName(string name)
-        {
+            BugSenseHandler.Instance.SendExceptionAsync(ex, null);
         }
     }
 }
-

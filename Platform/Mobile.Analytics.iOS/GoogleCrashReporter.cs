@@ -1,5 +1,5 @@
 // --------------------------------------------------------------------------------------------------------------------
-// <copyright file="NullTracker.cs" company="sgmunn">
+// <copyright file="GoogleCrashReporter.cs" company="sgmunn">
 //   (c) sgmunn 2013  
 //
 //   Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -21,26 +21,40 @@
 namespace Mobile.Analytics
 {
     using System;
+    using Google.Analytics;
+    using MonoTouch.Foundation;
 
-    public sealed class NullTracker : ITracker
+    public sealed class GoogleCrashReporter : ICrashReporter
     {
-        public readonly static ITracker Instance = new NullTracker();
+        private readonly string trackingId;
 
-        private NullTracker()
+        public GoogleCrashReporter(string trackingId)
         {
+            this.trackingId = trackingId;    
         }
 
-        public void SendEvent(string category, string action, string label)
+        public static void Init(int dispatchInterval, bool unCaughtExceptions = true)
         {
+            GAI.SharedInstance.TrackUncaughtExceptions = unCaughtExceptions;
+            GAI.SharedInstance.DispatchInterval = dispatchInterval;
         }
 
-        public void SendTiming(string category, int milliseconds, string name, string label)
+        public void SendException(Exception ex)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            if (tracker != null)
+            {
+                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(ex.ToString(), 0).Build());
+            }
         }
 
-        public void SetCurrentScreenName(string name)
+        public void SendException(Exception ex, bool fatal)
         {
+            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
+            if (tracker != null)
+            {
+                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(ex.ToString(), fatal ? 1 : 0).Build());
+            }
         }
     }
 }
-

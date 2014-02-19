@@ -17,43 +17,155 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System.Linq;
 
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
 
     public static class Tracker
     {
-        private static ITracker instance = NullTracker.Instance;
+        private static readonly object locker = new object();
 
-        public static void Init(ITracker tracker)
+        private static readonly List<ITracker> analytics = new List<ITracker>();
+
+        private static readonly List<ICrashReporter> crashReporters = new List<ICrashReporter>();
+
+        public static void AddTracker(ITracker tracker)
         {
-            if (tracker == null)
+            lock (locker)
             {
-                throw new ArgumentNullException("tracker");
-            }
+                if (tracker == null)
+                {
+                    throw new ArgumentNullException("tracker");
+                }
 
-            instance = tracker;
+                if (analytics.All(x => x.GetType() != tracker.GetType()))
+                {
+                    analytics.Add(tracker);
+                }
+            }
+        }
+
+        public static void RemoveTracker(ITracker tracker)
+        {
+            lock (locker)
+            {
+                if (tracker == null)
+                {
+                    throw new ArgumentNullException("tracker");
+                }
+
+                analytics.Remove(tracker);
+            }
+        }
+
+        public static void ClearTrackers()
+        {
+            lock (locker)
+            {
+                analytics.Clear();
+            }
+        }
+
+        public static void AddCrashReporter(ICrashReporter reporter)
+        {
+            lock (locker)
+            {
+                if (reporter == null)
+                {
+                    throw new ArgumentNullException("reporter");
+                }
+
+                if (crashReporters.All(x => x.GetType() != reporter.GetType()))
+                {
+                    crashReporters.Add(reporter);
+                }
+            }
+        }
+
+        public static void RemoveCrashReporter(ICrashReporter reporter)
+        {
+            lock (locker)
+            {
+                if (reporter == null)
+                {
+                    throw new ArgumentNullException("reporter");
+                }
+
+                crashReporters.Remove(reporter);
+            }
+        }
+
+        public static void ClearCrashReporters()
+        {
+            lock (locker)
+            {
+                crashReporters.Clear();
+            }
         }
 
         public static void SendEvent(string category, string action, string label)
         {
-            instance.SendEvent(category, action, label);
+            foreach (var instance in GetTrackers())
+            {
+                instance.SendEvent(category, action, label);
+            }
         }
 
-        public static void SendException(string message, bool fatal)
+        public static void SendException(Exception ex, bool fatal)
         {
-            instance.SendException(message, fatal);
+            foreach (var instance in GetCrashReporters())
+            {
+                instance.SendException(ex, fatal);
+            }
+        }
+
+        public static void SendException(Exception ex)
+        {
+            foreach (var instance in GetCrashReporters())
+            {
+                instance.SendException(ex);
+            }
         }
 
         public static void SendTiming(string category, int milliseconds, string name, string label)
         {
-            instance.SendTiming(category, milliseconds, name, label);
+            foreach (var instance in GetTrackers())
+            {
+                instance.SendTiming(category, milliseconds, name, label);
+            }
         }
 
         public static void SetCurrentScreenName(string name)
         {
-            instance.SetCurrentScreenName(name);
+            foreach (var instance in GetTrackers())
+            {
+                instance.SetCurrentScreenName(name);
+            }
+        }
+
+        private static List<ITracker> GetTrackers()
+        {
+            var result = new List<ITracker>();
+            lock (locker)
+            {
+                result.AddRange(analytics);
+            }
+
+            return result;
+        }
+
+        private static List<ICrashReporter> GetCrashReporters()
+        {
+            var result = new List<ICrashReporter>();
+            lock (locker)
+            {
+                result.AddRange(crashReporters);
+            }
+
+            return result;
         }
     }
 }

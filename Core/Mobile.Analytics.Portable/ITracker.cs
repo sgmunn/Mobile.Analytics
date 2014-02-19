@@ -28,7 +28,6 @@ namespace Mobile.Analytics
     public interface ITracker
     {
         void SendEvent(string category, string action, string label);
-        void SendException(string message, bool fatal);
         void SendTiming(string category, int milliseconds, string name, string label);
 
         void SetCurrentScreenName(string name);

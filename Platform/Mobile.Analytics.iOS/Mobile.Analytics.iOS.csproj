@@ -42,6 +42,7 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Compile Include="GoogleTracker.cs" />
+    <Compile Include="GoogleCrashReporter.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Google.Analytics.iOS\Google.Analytics.iOS.csproj">
