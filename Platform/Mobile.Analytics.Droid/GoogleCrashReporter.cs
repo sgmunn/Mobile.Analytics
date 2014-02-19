@@ -33,6 +33,14 @@ namespace Mobile.Analytics
             this.context = context;
         }
 
+        public object Native 
+        { 
+            get
+            {
+                return EasyTracker.GetInstance(this.context);
+            }
+        }
+
         public void SendException(Exception ex)
         {
             this.SendException(ex.ToString(), false);

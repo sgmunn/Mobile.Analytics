@@ -34,6 +34,14 @@ namespace Mobile.Analytics
             Google.Analytics.GAServiceManager.Instance.SetLocalDispatchPeriod(10);
         }
 
+        public object Native 
+        { 
+            get
+            {
+                return EasyTracker.GetInstance(this.context);
+            }
+        }
+
         public void SendEvent(string category, string action, string label)
         {
             var tracker = EasyTracker.GetInstance(this.context);

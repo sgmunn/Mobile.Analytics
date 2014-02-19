@@ -27,6 +27,11 @@ namespace Mobile.Analytics
     /// </summary>
     public interface ITracker
     {
+        /// <summary>
+        /// Gets the native implementation of the tracker
+        /// </summary>
+        object Native { get; }
+
         void SendEvent(string category, string action, string label);
         void SendTiming(string category, int milliseconds, string name, string label);
 

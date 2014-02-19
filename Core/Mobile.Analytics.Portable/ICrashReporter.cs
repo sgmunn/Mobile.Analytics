@@ -27,6 +27,7 @@ namespace Mobile.Analytics
     /// </summary>
     public interface ICrashReporter
     {
+        object Native { get; }
         void SendException(Exception ex, bool fatal);
         void SendException(Exception ex);
     }

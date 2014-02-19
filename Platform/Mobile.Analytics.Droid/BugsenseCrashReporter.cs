@@ -42,6 +42,14 @@ namespace Mobile.Analytics
 
         public event EventHandler<Android.Runtime.RaiseThrowableEventArgs> UnhandledExceptionRaiser;
 
+        public object Native 
+        { 
+            get
+            {
+                return BugSenseHandler.Instance;
+            }
+        }
+
         public void SendException(Exception ex)
         {
             BugSenseHandler.Instance.SendExceptionAsync(ex, null);

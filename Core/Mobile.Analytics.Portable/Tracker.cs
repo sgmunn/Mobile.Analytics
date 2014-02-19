@@ -17,12 +17,12 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Linq;
 
 namespace Mobile.Analytics
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class Tracker
     {
