@@ -21,7 +21,9 @@
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
     using BugSense;
+    using BugSense.Core.Model;
 
     public sealed class BugsenseCrashReporter : ICrashReporter
     {
@@ -52,6 +54,35 @@ namespace Mobile.Analytics
         public void SendException(Exception ex, bool fatal)
         {
             BugSenseHandler.Instance.LogException(ex, null);
+        }
+
+        public void SendException(Exception ex, IDictionary<string, string> extra)
+        {
+            BugSenseHandler.Instance.LogException(ex, GetExtra(extra));
+        }
+
+        public void SendException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            BugSenseHandler.Instance.LogException(ex, GetExtra(extra));
+        }
+
+        private LimitedCrashExtraDataList GetExtra(IDictionary<string, string> extra)
+        {
+            var data = new BugSense.Core.Model.LimitedCrashExtraDataList();
+
+            foreach (var pair in extra)
+            {
+                try
+                {
+                    data.Add(new CrashExtraData(pair.Key, pair.Value));
+                }
+                catch
+                {
+                    System.Diagnostics.Debug.WriteLine("Could not add value to Bugsense additional data");
+                }
+            }
+
+            return data;
         }
     }
 }

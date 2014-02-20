@@ -21,6 +21,7 @@
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
     using Google.Analytics;
     using Android.Content;
 
@@ -49,6 +50,16 @@ namespace Mobile.Analytics
         public void SendException(Exception ex, bool fatal)
         {
             this.SendException(ex.ToString(), fatal);
+        }
+
+        public void SendException(Exception ex, IDictionary<string, string> extra)
+        {
+            this.SendException(DebugCrashReporter.FormatException(ex, false, extra), false);
+        }
+
+        public void SendException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            this.SendException(DebugCrashReporter.FormatException(ex, fatal, extra), fatal);
         }
 
         private void SendException(string message, bool fatal)

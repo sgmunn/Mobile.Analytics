@@ -17,10 +17,12 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
+using System.Text;
 
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
 
     public sealed class DebugCrashReporter : ICrashReporter
     {
@@ -38,14 +40,43 @@ namespace Mobile.Analytics
             }
         }
 
+        public static string FormatException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            var additionalInfo = string.Empty;
+
+            if (extra != null)
+            {
+                var builder = new StringBuilder();
+                foreach (var pair in extra)
+                {
+                    builder.AppendLine(string.Format("{0} - {1}", pair.Key, pair.Value));
+                }
+
+                additionalInfo = builder + "\n";
+            }
+
+            var msg = string.Format("{0}{1}\n{2}{3}", fatal ? "FATAL - " : string.Empty, ex.Message, additionalInfo, ex);
+            return msg;
+        }
+
         public void SendException(Exception ex, bool fatal)
         {
-            System.Diagnostics.Debug.WriteLine(string.Format("EXCEPTION: {0}{1}", fatal ? "FATAL - " : string.Empty, ex));
+            this.SendException(ex, fatal, null);
         }
 
         public void SendException(Exception ex)
         {
-            this.SendException(ex, false);
+            this.SendException(ex, false, null);
+        }
+
+        public void SendException(Exception ex, IDictionary<string, string> extra)
+        {
+            this.SendException(ex, false, extra);
+        }
+
+        public void SendException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            System.Diagnostics.Debug.WriteLine(string.Format("EXCEPTION: {0}", DebugCrashReporter.FormatException(ex, fatal, extra)));
         }
     }
 }

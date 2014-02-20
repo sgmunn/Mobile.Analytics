@@ -21,8 +21,8 @@
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
     using Google.Analytics;
-    using MonoTouch.Foundation;
 
     public sealed class GoogleCrashReporter : ICrashReporter
     {
@@ -49,19 +49,30 @@ namespace Mobile.Analytics
 
         public void SendException(Exception ex)
         {
-            var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
-            if (tracker != null)
-            {
-                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(ex.ToString(), 0).Build());
-            }
+            this.SendException(ex.ToString(), false);
         }
 
         public void SendException(Exception ex, bool fatal)
         {
+            this.SendException(ex.ToString(), fatal);
+        }
+
+        public void SendException(Exception ex, IDictionary<string, string> extra)
+        {
+            this.SendException(DebugCrashReporter.FormatException(ex, false, extra), false);
+        }
+
+        public void SendException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            this.SendException(DebugCrashReporter.FormatException(ex, fatal, extra), fatal);
+        }
+
+        private void SendException(string message, bool fatal)
+        {
             var tracker = GAI.SharedInstance.TrackerWithTrackingId(this.trackingId);
             if (tracker != null)
             {
-                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(ex.ToString(), fatal ? 1 : 0).Build());
+                tracker.Send(GAIDictionaryBuilder.CreateExceptionWithDescription(message, fatal ? 1 : 0).Build());
             }
         }
     }

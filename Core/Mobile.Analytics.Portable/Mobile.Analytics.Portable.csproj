@@ -35,8 +35,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ITracker.cs" />
     <Compile Include="ICrashReporter.cs" />
-    <Compile Include="NullCrashReporter.cs" />
-    <Compile Include="NullTracker.cs" />
     <Compile Include="DebugTracker.cs" />
     <Compile Include="DebugCrashReporter.cs" />
     <Compile Include="Tracking.cs" />

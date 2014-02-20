@@ -21,6 +21,7 @@
 namespace Mobile.Analytics
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Represents a crash reporter
@@ -28,7 +29,9 @@ namespace Mobile.Analytics
     public interface ICrashReporter
     {
         object Native { get; }
-        void SendException(Exception ex, bool fatal);
         void SendException(Exception ex);
+        void SendException(Exception ex, bool fatal);
+        void SendException(Exception ex, IDictionary<string, string> extra);
+        void SendException(Exception ex, bool fatal, IDictionary<string, string> extra);
     }
 }

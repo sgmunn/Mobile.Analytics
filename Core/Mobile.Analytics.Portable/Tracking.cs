@@ -129,6 +129,14 @@ namespace Mobile.Analytics
             }
         }
 
+        public static void SendException(Exception ex)
+        {
+            foreach (var instance in GetCrashReporters())
+            {
+                instance.SendException(ex);
+            }
+        }
+
         public static void SendException(Exception ex, bool fatal)
         {
             foreach (var instance in GetCrashReporters())
@@ -137,11 +145,19 @@ namespace Mobile.Analytics
             }
         }
 
-        public static void SendException(Exception ex)
+        public static void SendException(Exception ex, IDictionary<string, string> extra)
         {
             foreach (var instance in GetCrashReporters())
             {
-                instance.SendException(ex);
+                instance.SendException(ex, extra);
+            }
+        }
+
+        public static void SendException(Exception ex, bool fatal, IDictionary<string, string> extra)
+        {
+            foreach (var instance in GetCrashReporters())
+            {
+                instance.SendException(ex, fatal, extra);
             }
         }
 
