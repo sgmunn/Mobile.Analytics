@@ -27,21 +27,17 @@ namespace Mobile.Analytics
     using BugSense.Model;
     using BugSense.Core.Model;
 
-    // TODO: provide a way to pass in additional information
-
     public sealed class BugsenseCrashReporter : ICrashReporter
     {
         public BugsenseCrashReporter(string key)
         {
             BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(), Application.Context, key);
-            //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
 
         public BugsenseCrashReporter(string key, string userId)
         {
             BugSenseHandler.Instance.InitAndStartSession(new ExceptionManager(), Application.Context, key);
             BugSenseHandler.Instance.UserIdentifier = userId;
-            //BugSenseHandler.Instance.AddCrashExtraData(new BugSense.Core.Model.CrashExtraData("order_id", "1234"));
         }
 
         public object Native 
