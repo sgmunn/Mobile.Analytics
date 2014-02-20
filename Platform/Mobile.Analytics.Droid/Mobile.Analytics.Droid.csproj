@@ -55,6 +55,7 @@
     <Compile Include="GoogleTracker.cs" />
     <Compile Include="BugsenseCrashReporter.cs" />
     <Compile Include="GoogleCrashReporter.cs" />
+    <Compile Include="DebugCrashReporting.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

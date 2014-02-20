@@ -53,6 +53,7 @@
     <Compile Include="GoogleTracker.cs" />
     <Compile Include="GoogleCrashReporter.cs" />
     <Compile Include="BugsenseCrashReporter.cs" />
+    <Compile Include="DebugCrashReporting.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Google.Analytics.iOS\Google.Analytics.iOS.csproj">

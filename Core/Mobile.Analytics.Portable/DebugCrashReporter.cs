@@ -17,12 +17,12 @@
 //   IN THE SOFTWARE.
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
-using System.Text;
 
 namespace Mobile.Analytics
 {
     using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public sealed class DebugCrashReporter : ICrashReporter
     {
