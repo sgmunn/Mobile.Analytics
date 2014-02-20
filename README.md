@@ -19,6 +19,7 @@ Report a handled exception:
     Tracking.SendException(ex);
 
 # Analytics 
+
 Add an ITracker:
 
     Mobile.Analytics.Tracking.AddTracker(new Mobile.Analytics.GoogleTracker(Application.Context));
